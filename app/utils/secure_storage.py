@@ -5,13 +5,16 @@ import os
 from json import JSONDecodeError
 import json
 import time
+from flet.security import encrypt, decrypt 
+from secrets import token_hex
+
 
 
 
 dotenv_path = '.env'
 load_dotenv(dotenv_path, override=True)
 
-#secret_key = os.getenv('SECRET_KEY')
+secret_key = os.getenv('bit32_key')
 #ALGORITHM = os.getenv('ALGORITHM')
 
 

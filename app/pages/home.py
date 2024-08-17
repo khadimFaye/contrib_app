@@ -3,6 +3,8 @@ from app.custums.cards import contentCard
 from app.custums.dropdown import CustomDropdown
 from app.custums.dialog import Dialog
 from app.utils.functions import get_schede
+from app.custums.snackbar import CustomSnackbar
+from app.custums.navigationbar import menuBarButton
 
 
 
@@ -12,6 +14,7 @@ import asyncio
 import sys
 
 from ..utils.secure_storage import *
+import threading
 
 dotenv_path = '.env'
 load_dotenv(dotenv_path, override=True)
@@ -22,6 +25,7 @@ URLBASE = 'https://samaserver-51970f571916.herokuapp.com'
 # URLBASE = 'http://127.0.0.1:3000'
 ENDPOINT = '/content'
 class Home(Container):
+    __counter = 5
     __scheda_id = iter(range(1,30))
     # my_key = Key().load_key() or None
  
@@ -131,7 +135,7 @@ class Home(Container):
             controls = [
                 Row(
                     alignment=MainAxisAlignment.START,
-                    controls = [IconButton(icon=icons.MENU_ROUNDED,icon_color=colors.BLACK87, on_click=lambda e :self.open_menu(e))]),
+                    controls = [IconButton(icon=icons.MENU_ROUNDED,icon_color=colors.BLACK87,size = 30,  on_click=self.open_menu)] if self._page.platform.value =='windows' else [menuBarButton(callback=self.open_menu)]),
                 # Row(expand=True,alignment = MainAxisAlignment.START,controls = [
                 #     Card(
                 #         expand = 1,
@@ -183,7 +187,7 @@ class Home(Container):
             border_radius=12,
             # height=500,
             content=Column(
-                scroll=ScrollMode.AUTO,
+                # scroll=ScrollMode.AUTO,
                
             controls=[
                 self.toolbar,
@@ -211,9 +215,9 @@ class Home(Container):
                 
                 Row(alignment=MainAxisAlignment.START,controls = [Text(value = 'Risultati:',weight='w700',size=16, color = colors.BLACK54)]),
                 Row(alignment=MainAxisAlignment.SPACE_EVENLY,
-                    expand=False,
+                    expand=True,
                        controls = [
-                            Column(expand = True,controls = [self.listview]),
+                            Column(scroll=ScrollMode.HIDDEN,expand = True,controls = [self.listview]),
                         
 
                         ])],
@@ -247,8 +251,11 @@ class Home(Container):
             response = requests.get(url, headers=headers, params=params)
             if response.status_code==200:
                 return response.json()
-            else:
-                return None
+            
+            elif response.status_code==401:
+               return False
+                
+            return None
         except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError) as e:
             print(f'Errore: {e}')
         finally:
@@ -262,8 +269,17 @@ class Home(Container):
         key = self.selected_arg.controls[-1].value
         n = self.custom_dropdown.value
         scheda = self.get_scheda_from_db(key=key,n=n)
-        if not scheda:
+        if scheda is None:
             return None
+        
+        elif scheda ==False:
+           
+            self.listview.controls = [Icon(name=icons.WARNING_ROUNDED, color= 'red', size=100)]
+            self.set_snackbar(message=f'stai per essere riindirzzato tra {self.__counter}', color=colors.YELLOW_800)
+            self.update()
+            self.start_countdown()
+            return False
+            
         self.showWidgets(scheda, key)
     
     def loading(self,*args):
@@ -297,37 +313,7 @@ class Home(Container):
         self.update()
 
   
-    
-# def getScheda(self,arg, n:str) ->List[dict]:
-#     try:
-        
-#         #get a specific shceda with argo and n
-#         url = f'/getschede?argomento={arg}&index={n}'
-#         response = requests.get(url)
-#     except Exception as e:
-#         print(str(e))
-#         return None
-#     return response.json()
 
-# def showContent(self, arg, n):
-#     #add widget with contents into the listview
-#     listview = ListView()
-  
-#     for i in range(1,30+1):
-#         try:
-#             scheda = getScheda(arg = arg, n = n)
-#             question = scheda.get('quest') or None
-#             trad_value = scheda.get('lang')
-#             card = Card(
-#                 question_index = i,
-#                 question = question,
-#                 trad = trad_value,
-#                 )
-            
-#             ListView.append(Card)
-#             update()
-#         except KeyError as e:
-#             pass
     def open_dialog(self, e):
         self._page.open(self.dialog)
         # self._page.update()
@@ -338,3 +324,21 @@ class Home(Container):
         self._page.close(self.dialog)
         self.verify_content()
         self.update()
+    
+    def set_snackbar(self, message, color):
+        snackbar = CustomSnackbar(message=message, bgcolor=colors.with_opacity(0.70, f'{color}'))
+        self._page.add(snackbar)
+        self._page.open(snackbar)
+    
+    def start_countdown(self, *args):
+        def coundown():
+            self.__counter -= 1
+            if self.__counter >0:
+                time.sleep(1.0)
+                print(self.__counter)
+                return coundown()
+            if self.__counter==0:
+                self._page.go('login')
+        threading.Thread(target=coundown).start()
+        
+        

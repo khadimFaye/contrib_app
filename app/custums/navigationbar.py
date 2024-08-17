@@ -48,3 +48,36 @@ class Navbar(NavigationBar):
         if self.callback is not None:
 
             self.callback(self.selected_index)
+            
+            
+class menuBarButton(SubmenuButton):
+    def __init__(self, callback = None, visible : bool = None):
+        super().__init__(
+            style=ButtonStyle(bgcolor='white'),
+            menu_style=MenuStyle(bgcolor='white', elevation=10.0, padding=8, surface_tint_color=colors.with_opacity(0.002,'black'), shape=RoundedRectangleBorder(radius=12)),
+            content=Icon(name = icons.MENU_ROUNDED, color=colors.BLACK87, size=30),
+            controls=[
+                MenuItemButton(
+                    content=ElevatedButton(text='Home', icon=icons.HOME_ROUNDED, icon_color=colors.BLACK87, color=colors.BLACK87, bgcolor='white'),
+                    close_on_click=True,
+                    on_click=callback
+                    
+                    
+                ),
+                
+                MenuItemButton(
+                    content=ElevatedButton(text='admin', icon=icons.ADMIN_PANEL_SETTINGS, icon_color=colors.BLACK87, color=colors.BLACK87, bgcolor='white'),
+                    close_on_click=True,
+                    on_click=callback
+                    
+                    
+                )
+            ]    
+           
+        )
+# class menuBarButton(MenuBar):
+#     def __init__(self, callback = None, visible : bool = None):
+#         super().__init__(
+#             controls=[submenuButton(callback=callback)]
+#         )
+    

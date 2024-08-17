@@ -3,6 +3,7 @@ from flet import *
 class CustomSnackbar(SnackBar):
     def __init__(self,  message:str, icon_color = None, bgcolor = None, page=None):
         super().__init__(
+           
             content=Container(
                 content=Row(
                     controls = [

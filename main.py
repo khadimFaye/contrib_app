@@ -21,20 +21,20 @@ from app.pages.login import Login
 def main(page : Page):
     
     page.add(TextButton(text='ciaaao'))
-
+    page.theme_mode = 'light'
     page.add(SafeArea(expand=True, content = Login(page)))
     page.on_route_change = lambda _ : change_route(page=page)
 
     page.bgcolor = colors.PURPLE_800 if page.platform.value =='windows'  else 'white'
 
     page.window_width,page.window_height = (650,740)
-    if os.getenv('sub') is not None:
-        page.go('auth')
-        # loop = asyncio.get_running_loop()
-        Loading(page).on_enter()
+    # if os.getenv('sub') is not None:
+    #     page.go('auth')
+    #     # loop = asyncio.get_running_loop()
+    #     Loading(page).on_enter()
         
-    else:
-        page.go('/')
+    # else:
+    page.go('/')
    
     
 

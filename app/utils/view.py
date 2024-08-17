@@ -59,15 +59,6 @@ def view_handler(page):
         
     }
  
-# def pram_view__handler(page, view:str, param:int=0, *args, ) -> dict:
-#     params = [arg for arg in args] if param else  []
-#     if params !=[]:
-         
-#         return View(
-#             route='schede',
-#             controls=[ft.SafeArea(view(params[0], params[1], params[2]))]
-#         )
-       
 
 
 def change_route(page,handler=view_handler):

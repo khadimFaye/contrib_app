@@ -1,7 +1,7 @@
 import flet as ft
 from flet import *
 from ..custums.navigationRail import Navrail
-# from custums.navigationbar import Navbar
+from app.custums.navigationbar import menuBarButton
 from .home import Home
 from .request_handler import RQ
 # from ..utils.view import view_handler, change_route
@@ -12,7 +12,7 @@ class MainApp(Column):
     
     def __init__(self, page):
         self._page = page
-        self.HOME = Home(self._page, menuOpener = self.open_menu)
+        self.HOME = Home(self._page, menuOpener = self.open_menu if self.check_platform() else self.change_destination_for_other_platform)
         self.request_handler = RQ(self._page)
         self.NAVRAIL = Navrail(callback=self.change_destination)
        
@@ -57,10 +57,30 @@ class MainApp(Column):
         if index_map.get(str(index)) is not None:
           
             self.content_column.controls=[index_map[str(index)]]
+            self.open_menu()
             self.update()
-    def open_menu(self, e):
+            
+    def change_destination_for_other_platform(self, e):
+        destination = e.control.content.text
+        index_map = {
+            'Home':self.HOME,
+            'admin' : self.request_handler
+        }
+
+        if index_map.get(destination) is not None:
+          
+            self.content_column.controls=[index_map[destination]]
+            self.update()
+            
+    def open_menu(self, *args):
+        # print(e)
         self.NAVRAIL.width = self.__max_extende_value if self.NAVRAIL.width==0 else 0
-        # self.NAVRAIL.update()
+        self.NAVRAIL.update()
         self.update()
+        
+    def check_platform(self,*args):
+        if self._page.platform.value == 'windows':
+            return True
+        return False
         
 # <
