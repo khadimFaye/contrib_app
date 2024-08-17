@@ -18,12 +18,14 @@ secret_key = os.getenv('bit32_key')
 #ALGORITHM = os.getenv('ALGORITHM')
 
 
-def save_token(service_name:str, username : str, token : str):
+def save_token(service_name:str, username : str, token : str, title = None):
     
     data = {
         'service_name' : service_name,
         'user_name' : username,
-        'token' : token
+        'sub' : username,
+        'token' : token,
+        'admin':title
         }
     
     
@@ -38,7 +40,7 @@ def save_token(service_name:str, username : str, token : str):
             print(f"Error saving token: {e}")
     
    
-def get_token(service_name:str, username:str):
+def get_token(service_name:str, username:str = None):
     #carica file della variabile d'ambiene
     try:
 
@@ -51,7 +53,7 @@ def get_token(service_name:str, username:str):
       
            
        
-        if data.get('service_name') == service_name and data.get('user_name') == username:
+        if data.get('service_name') == service_name:
             return data.get('token')
         return None
     except (KeyError, Exception) as e:

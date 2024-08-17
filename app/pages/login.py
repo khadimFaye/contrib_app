@@ -146,12 +146,12 @@ class Login(Container):
         if response.status_code==200:
            
             user = response.json()['user']
-            save_token(service_name='mytoken', username=user['username'], token=response.json()['access_token'])
-            set_key(dotenv_path, 'sub', user.get('username'))
-            set_key(dotenv_path, 'admin', str(user.get('admin')))
+            save_token(service_name='mytoken', username=user['username'], token=response.json()['access_token'], title=str(user.get('admin')))
+            # set_key(dotenv_path, 'sub')
+            # set_key(dotenv_path, 'admin', str(user.get('admin')))
 
             self.set_snackbar(message='hai loggato con successo!', color='green')
-            load_dotenv(dotenv_path, override=True)
+            # load_dotenv(dotenv_path, override=True)
             self._page.go('/')
             # return response.json()['user']
         
