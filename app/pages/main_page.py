@@ -8,42 +8,13 @@ from .request_handler import RQ
 
 
 class MainApp(Column):
-    __destinations = [
-        {
-            'icon' : icons.HOME_OUTLINED,
-            'label' : 'homse', 
-            'selected_icon' : icons.HOME_FILLED
-        },
-
-        {
-            'icon' : icons.HISTORY_OUTLINED,
-            'label' : 'logs', 
-            'selected_icon' : icons.HISTORY
-        },
-
-        { 
-            'icon' : icons.ADMIN_PANEL_SETTINGS_OUTLINED,
-            'label' : 'admin', 
-            'selected_icon' : icons.ADMIN_PANEL_SETTINGS
-        },
-        # { 
-        #     'icon' : icons.NOTE_OUTLINED,
-        #     'label' : 'note', 
-        #     'selected_icon' : icons.NOTE_ROUNDED
-        # },
-        { 
-            'icon' : icons.SETTINGS_OUTLINED,
-            'label' : 'impostazioni', 
-            'selected_icon' : icons.SETTINGS
-        },
-
-        
-        ]
+    __max_extende_value = 120
+    
     def __init__(self, page):
         self._page = page
-        self.HOME = Home(self._page)
+        self.HOME = Home(self._page, menuOpener = self.open_menu)
         self.request_handler = RQ(self._page)
-        self.NAVRAIL = Navrail(destinations=self.__destinations, callback=self.change_destination)
+        self.NAVRAIL = Navrail(callback=self.change_destination)
        
         # self._page.navigation_bar = Navbar(callback=self.change_destination) if self._page.platform.value!='windows' else None
         self.content_column = Column(expand=True,controls=[self.HOME])
@@ -87,3 +58,9 @@ class MainApp(Column):
           
             self.content_column.controls=[index_map[str(index)]]
             self.update()
+    def open_menu(self, e):
+        self.NAVRAIL.width = self.__max_extende_value if self.NAVRAIL.width==0 else 0
+        # self.NAVRAIL.update()
+        self.update()
+        
+# <

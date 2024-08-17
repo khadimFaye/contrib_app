@@ -19,9 +19,6 @@ def view_handler(page):
         '/' : View(
             route='/',
             controls= [ft.SafeArea(expand=True,content=home)],
-            bottom_appbar=Navbar(
-                visible=True ,
-                callback=home.change_destination) if page.platform.value !='windows' else None,
             bgcolor=colors.PURPLE_800 if page.platform.value =='windows' else 'white',
             ),
 

@@ -26,12 +26,13 @@ class Home(Container):
     # my_key = Key().load_key() or None
  
     
-    def __init__(self,page):
+    def __init__(self,page, menuOpener):
         self._page = page
         self.dialog = Dialog(callback=self.select)
         self._page.add(self.dialog)
         
         self.reload_image = Image(src=f'/hotreload.gif', width=200, height=200)
+        self.open_menu = menuOpener
 
         self.listview = ListView(
             spacing=8,
@@ -130,7 +131,7 @@ class Home(Container):
             controls = [
                 Row(
                     alignment=MainAxisAlignment.START,
-                    controls = [Text(value='Home',weight='w700', size=18, color=colors.BLACK87)]),
+                    controls = [IconButton(icon=icons.MENU_ROUNDED,icon_color=colors.BLACK87, on_click=lambda e :self.open_menu(e))]),
                 # Row(expand=True,alignment = MainAxisAlignment.START,controls = [
                 #     Card(
                 #         expand = 1,
