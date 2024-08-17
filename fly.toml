@@ -1,0 +1,22 @@
+app = "wolofconnect"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  FLET_SESSION_TIMEOUT = "60"
+  secret_key='c09e65a29308957a29712bb798c2cf6f2dd7563eee33a7f63057f62552c25c72'
+  ALGORITHM = 'HS256'
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.concurrency]
+    type = "connections"
+    soft_limit = 200
+    hard_limit = 250
