@@ -9,14 +9,35 @@ processes = []
   secret_key='c09e65a29308957a29712bb798c2cf6f2dd7563eee33a7f63057f62552c25c72'
   ALGORITHM = 'HS256'
 
-[http_service]
-  internal_port = 8000
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
+[experimental]
+    allowed_public_ports = []
+    auto_rollback = true
+
+[[services]]
+    http_checks = []
+    internal_port = 8000
+    processes = ["app"]
+    protocol = "tcp"
+    script_checks = []
+
+
 
   [http_service.concurrency]
     type = "connections"
     soft_limit = 200
     hard_limit = 250
+    
+  [[services.ports]]
+    force_https = True
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15"
+    restart_limit = 0
+    timeout = "s2"
