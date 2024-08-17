@@ -85,14 +85,12 @@ class Loading(Container):
 
             activce_user = payload.get('sub')
             if activce_user is None:
+                self.set_snackbar(message='fai il login di nuovo:(', color='red')
                 print(str(e))
-                self.set_snackbar(message='sessione terminata fai il login di nuovo:(', color='red')
-                self._page.go('login')
-                # raise ValueError('sessione terminata fai il login di nuovo')
-            #     raise HTTPException(
-            #     status_code=status.HTTP_401_UNAUTHORIZED,
-            #     detail='sessione terminata fai il login di nuovo'
-            # )
+            else:
+                self.set_snackbar(message='utente autentificato!', color='green')
+                self._page.go('/')
+              
 
 
                 # response = requests.post(url=url,)
@@ -125,8 +123,7 @@ class Loading(Container):
         
             
        
-        self.set_snackbar(message='hai loggato con successo!', color='green')
-        self._page.go('/')
+        
 
     # def start(self, *args):
     #     if os.getenv('sub') is not None :
