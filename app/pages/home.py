@@ -15,7 +15,7 @@ from ..utils.secure_storage import *
 
 dotenv_path = '.env'
 load_dotenv(dotenv_path, override=True)
-path = os.path.join(os.getcwd(),'assets')
+
 
 
 URLBASE = 'https://samaserver-51970f571916.herokuapp.com'
@@ -31,7 +31,7 @@ class Home(Container):
         self.dialog = Dialog(callback=self.select)
         self._page.add(self.dialog)
         
-        self.reload_image = Image(src=f'/assets/hotreload.gif', width=200, height=200)
+        self.reload_image = Image(src=f'/hotreload.gif', width=200, height=200)
 
         self.listview = ListView(
             spacing=8,
@@ -42,7 +42,7 @@ class Home(Container):
                          color=colors.BLACK87)]),
                 
                 Row(alignment=MainAxisAlignment.CENTER, 
-                    controls = [Image(src = 'assets/load.gif', error_content=Icon(name=icons.IMAGE_NOT_SUPPORTED), filter_quality=FilterQuality.HIGH,)])
+                    controls = [Image(src = '/load.gif', error_content=Icon(name=icons.IMAGE_NOT_SUPPORTED), filter_quality=FilterQuality.HIGH,)])
                     ]
                 )   
             ]

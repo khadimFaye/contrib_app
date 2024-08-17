@@ -2,7 +2,7 @@
 FROM python:3-alpine
 
 #imposta la cartella di lavoro
-WORKDIR contrib_app
+WORKDIR /contrib_app
 
 #copia il file requirements.txt nella dir di lavoro
 COPY requirements.txt ./
@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 8000
 
 #comandoi per eseguire l'app
-CMD ["python", "main.py", "--web", "--port 8000","--host 0.0.0.0"]
+CMD ["python", "./main.py"]

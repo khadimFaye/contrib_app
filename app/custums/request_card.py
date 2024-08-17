@@ -300,13 +300,14 @@ class RequestCard(Card):
                 
                 self.tooltip = 'approvato'
                 self.update()
-                lambda _ : self.delet_request(_)
+                self.delet_request(e)
             
 
         except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, requests.exceptions.ConnectTimeout) as e:
             print('connection error ', str(e))
         except Exception as e:
             print('error ', str(e))
+            self.set_snackbar(message='qualcosa é andato storto :(', color='red')
        
     def delet_request(self, e):
         try:
@@ -330,6 +331,7 @@ class RequestCard(Card):
                 
         except Exception as e:
             print('error ', str(e))
+            self.set_snackbar(message='qualcosa é andato storto :(', color='red')
         finally:
             print('finally')
             self.refresh()

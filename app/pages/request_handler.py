@@ -153,7 +153,7 @@ class RQ(Container):
                     
             else:
                 if os.getenv('admin')!='True':
-                    self.listview.controls.append(self.excpetion_illustration(message = 'Accedi con un account che dispone dell\'autorizzazione!', image = Image(src=os.path.join(os.getcwd(),'assets','No_Auth.gif'))))
+                    self.listview.controls.append(self.excpetion_illustration(message = 'Accedi con un account che dispone dell\'autorizzazione!', image = Image(src='/No_Auth.gif')))
                     self.update()
                 else:
                 

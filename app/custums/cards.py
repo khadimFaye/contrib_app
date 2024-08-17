@@ -122,10 +122,8 @@ class contentCard(Card):
 
         )
         
-        #  Text(
-        #     value = traduction or 'n/d', 
-        #     color = colors.WHITE, 
-        #     weight='w500', size = 13 )
+       
+       
         
         self.traduction_hint_text = Text(
             value = 'traduzione wolof :'.capitalize() , 
@@ -231,6 +229,7 @@ class contentCard(Card):
             ,
         data=self.mini_height
         )
+    
     def extend(self, e):
         if self.container.data<self.max_height:
             #imposta l'animazione dell ingrandimento 
