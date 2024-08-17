@@ -74,7 +74,7 @@ class Loading(Container):
         snackbar = CustomSnackbar(message=message, bgcolor=colors.with_opacity(0.70, f'{color}'))
         self._page.show_snack_bar(snackbar)
     
-    async def on_enter(self,*args):
+    def on_enter(self,*args):
         time.sleep(1.2)
         try:
 

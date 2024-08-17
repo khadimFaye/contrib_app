@@ -30,8 +30,8 @@ def main(page : Page):
     page.window_width,page.window_height = (650,740)
     if os.getenv('sub') is not None:
         page.go('auth')
-        loop = asyncio.get_running_loop()
-        loop.create_task(Loading(page).on_enter())
+        # loop = asyncio.get_running_loop()
+        Loading(page).on_enter()
         
     else:
         page.go('/')
