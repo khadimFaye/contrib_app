@@ -13,7 +13,7 @@ class MainApp(Column):
     def __init__(self, page):
         self._page = page
         self.HOME = Home(self._page, menuOpener = self.open_menu if self.check_platform() else self.change_destination_for_other_platform)
-        self.request_handler = RQ(self._page)
+        self.request_handler = RQ(self._page, callback=self.open_menu if self.check_platform() else self.change_destination_for_other_platform)
         self.NAVRAIL = Navrail(callback=self.change_destination)
        
         # self._page.navigation_bar = Navbar(callback=self.change_destination) if self._page.platform.value!='windows' else None
@@ -50,8 +50,7 @@ class MainApp(Column):
     def change_destination(self, index):
         index_map = {
             '0':self.HOME,
-            '1':Text(value='hello'),
-            '2' : self.request_handler
+            '1' : self.request_handler
         }
 
         if index_map.get(str(index)) is not None:
@@ -61,7 +60,8 @@ class MainApp(Column):
             self.update()
             
     def change_destination_for_other_platform(self, e):
-        destination = e.control.content.text
+        print(e)
+        destination = e.control.content.controls[-1].value
         index_map = {
             'Home':self.HOME,
             'admin' : self.request_handler
@@ -73,7 +73,7 @@ class MainApp(Column):
             self.update()
             
     def open_menu(self, *args):
-        # print(e)
+        print(*args)
         self.NAVRAIL.width = self.__max_extende_value if self.NAVRAIL.width==0 else 0
         self.NAVRAIL.update()
         self.update()

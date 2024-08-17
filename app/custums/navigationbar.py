@@ -58,7 +58,7 @@ class menuBarButton(SubmenuButton):
             content=Icon(name = icons.MENU_ROUNDED, color=colors.BLACK87, size=30),
             controls=[
                 MenuItemButton(
-                    content=ElevatedButton(text='Home', icon=icons.HOME_ROUNDED, icon_color=colors.BLACK87, color=colors.BLACK87, bgcolor='white'),
+                    content=Row([Icon(name=icons.HOME_ROUNDED, color=colors.BLACK87),Text(value='Home', color=colors.BLACK87)]),
                     close_on_click=True,
                     on_click=callback
                     
@@ -66,7 +66,7 @@ class menuBarButton(SubmenuButton):
                 ),
                 
                 MenuItemButton(
-                    content=ElevatedButton(text='admin', icon=icons.ADMIN_PANEL_SETTINGS, icon_color=colors.BLACK87, color=colors.BLACK87, bgcolor='white'),
+                    content=Row([Icon(name=icons.ADMIN_PANEL_SETTINGS_ROUNDED, color=colors.BLACK87), Text(value='admin', color=colors.BLACK87)]),
                     close_on_click=True,
                     on_click=callback
                     

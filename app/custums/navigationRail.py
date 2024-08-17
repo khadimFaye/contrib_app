@@ -23,11 +23,11 @@ class Navrail(NavigationRail):
             'selected_icon' : icons.HOME_FILLED
         },
 
-        {
-            'icon' : icons.HISTORY_OUTLINED,
-            'label' : 'logs', 
-            'selected_icon' : icons.HISTORY
-        },
+        # {
+        #     'icon' : icons.HISTORY_OUTLINED,
+        #     'label' : 'logs', 
+        #     'selected_icon' : icons.HISTORY
+        # },
 
         { 
             'icon' : icons.ADMIN_PANEL_SETTINGS_OUTLINED,
@@ -52,7 +52,7 @@ class Navrail(NavigationRail):
         self.callback = callback
 
         super().__init__(
-            indicator_color=colors.BLACK,
+            indicator_color=colors.PURPLE_300,
             indicator_shape=ft.RoundedRectangleBorder,
             width=0,
             min_width=0,
@@ -73,9 +73,9 @@ class Navrail(NavigationRail):
             
             destinations=[
                 NavigationRailDestination(
-                    icon = destination['icon'],
-                    label=destination['label'],
-                    selected_icon= destination['selected_icon'],
+                    icon_content = ft.Icon(name = destination['icon'], color='white'),
+                    label_content=ft.Text(value=destination['label'], color='white'),
+                    selected_icon_content = ft.Icon(name = destination['selected_icon'], color=colors.PURPLE_600),
                     ) for destination in self.destinations
                     ]
         )

@@ -20,9 +20,22 @@ secret_key = os.getenv('bit32_key')
 
 def save_token(service_name:str, username : str, token : str):
     
-    set_key(dotenv_path=dotenv_path, key_to_set='exp', value_to_set=json.dumps({'service_name' : service_name, 'user_name':username}))
-    set_key(dotenv_path=dotenv_path, key_to_set='token', value_to_set=token)
-    load_dotenv(dotenv_path)
+    data = {
+        'service_name' : service_name,
+        'user_name' : username,
+        'token' : token
+        }
+    
+    
+    with open('dotenv.json', 'w', encoding='utf-8') as file:
+        try:
+            
+            if data!={}:
+                encode_data = encrypt(json.dumps(data), secret_key)
+                file.write(json.dumps({'sub':encode_data}, indent=5))
+                
+        except (FileNotFoundError, JSONDecodeError, Exception) as e :
+            print(f"Error saving token: {e}")
     
    
 def get_token(service_name:str, username:str):
@@ -31,23 +44,27 @@ def get_token(service_name:str, username:str):
 
        
         #serializza il json file 
-        data = json.loads(os.getenv('exp','{}'))
-        if data:
-           if data['service_name'] == service_name and data['user_name'] == username:
-             
-               return os.getenv('token')
+        with open('dotenv.json', 'r', encoding='utf-8') as file:
+            wrapped_buffer = json.loads(file.read()).get('sub')
+            encoded_data = decrypt(wrapped_buffer, secret_key)
+            data = json.loads(encoded_data)
+      
+           
+       
+        if data.get('service_name') == service_name and data.get('user_name') == username:
+            return data.get('token')
         return None
     except (KeyError, Exception) as e:
         print(str(e))
-def delet_current_token(service_name:str, username :str):
-    try:
+        
+# def delet_current_token(service_name:str, username :str):
+#     try:
 
-        data = json.loads(os.getenv('exp'))
-        if data.get('user_name') == username and service_name == data.get('service_name'):
-            print('eliminato')
-            return set_key(dotenv_path=dotenv_path, key_to_set='token', value_to_set='')
-        return False
-    except (JSONDecodeError, KeyError) as e:
-        print(str(e))
+#         data = json.loads(os.getenv('exp'))
+#         if data.get('user_name') == username and service_name == data.get('service_name'):
+#             print('eliminato')
+#             return set_key(dotenv_path=dotenv_path, key_to_set='token', value_to_set='')
+#         return False
+#     except (JSONDecodeError, KeyError) as e:
+#         print(str(e))
 
-# save_token("myservice", "user", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJDSzIzMTAiLCJleHAiOjE3MjM0MTA2OTZ9.44tc_degRjmitRaMGsjUvryhKV_03Y6KTIl4lJkt5Uc")
