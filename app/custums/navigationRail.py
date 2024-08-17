@@ -48,7 +48,7 @@ class Navrail(NavigationRail):
         
         ]
     def __init__(self, destinations : List[dict] = None, callback = None):
-        self.destinations = destinations or self.__destinations
+        self.destinations = destinations or self.__destinations        
         self.callback = callback
 
         super().__init__(
@@ -59,7 +59,8 @@ class Navrail(NavigationRail):
             min_extended_width=100,
             elevation=10,
             extended=False,
-            animate_size=(ft.Animation(duration=100*2, curve=ft.AnimationCurve.EASE_IN_TO_LINEAR)),
+            visible=False,
+            animate_size=(ft.Animation(duration=100*4, curve=ft.AnimationCurve.EASE_IN_TO_LINEAR)),
             # on_animation_end=ft.Animation(duration=2, curve=ft.AnimationCurve.FAST_OUT_SLOWIN),
             # height=200,
             bgcolor=colors.PURPLE_600,
@@ -82,7 +83,20 @@ class Navrail(NavigationRail):
     def change_destination(self, e:ft.ControlEvent):
         if self.callback is not None:
            self.callback(self.selected_index)
-           
+    # def update_controls(self,*args):
+    #     for control in self.destinations:
+    #         if self.visible==False:
+    #             control.icon_content.visible = False
+    #             control.label_content.visible=False
+    #             control.selected_icon_content.visible=False
+    #         else:
+    #             control.icon_content.visible = True
+    #             control.label_content.visible=True
+    #             control.selected_icon_content.visible=True
+            
+    #         print('aggiornato')
+    #     self.update()
+                
     # def opening_animatio(self,e):
         
            

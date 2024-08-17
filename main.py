@@ -41,7 +41,8 @@ def main(page : Page):
   
     
     
-ft.app(target = main, assets_dir='assets', port=8000, host="0.0.0.0")
+# ft.app(target = main, assets_dir='assets', port=8000, host="0.0.0.0")
+ft.app(target = main, assets_dir='assets')
 # ft.app(target =main, view=ft.AppView.WEB_BROWSER, port= 40400, host= '192.168.1.16',export_asgi_app=False)
 
 

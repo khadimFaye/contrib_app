@@ -24,7 +24,7 @@ class RQ(Container):
         self.listview = ListView(spacing=8)
         self.list_users = GridView(runs_count=1,spacing=8,)
         self.menu_opener = callback
-        self.navbar = menuBarButton(callback=self.menu_opener) if not self.check_platform() else IconButton(icon = icons.MENU_ROUNDED, icon_color=colors.BLACK87, on_click=lambda e :self.menu_opener(e))
+        self.navbar =IconButton(icon = icons.MENU_ROUNDED, icon_color=colors.BLACK87, on_click=lambda e :self.menu_opener(e))
 
         super().__init__(
             bgcolor=colors.with_opacity(0.95, 'white'),
@@ -36,7 +36,7 @@ class RQ(Container):
                  controls=[
                     Container(
                        expand = False,
-                        padding = 10,
+                        padding = 5,
                         bgcolor = 'white',
                         content=Row(
                                 controls=[
@@ -194,7 +194,7 @@ class RQ(Container):
             expand=False,
             controls=[
                 image,
-                Text(value=message, color = colors.BLACK87)]
+                Text(value=message, color = colors.BLACK87, text_align=TextAlign.CENTER, weight='w500')]
             )
     
     def check_platform(self,*args):

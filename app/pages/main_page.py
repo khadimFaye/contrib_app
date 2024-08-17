@@ -12,32 +12,33 @@ class MainApp(Column):
     
     def __init__(self, page):
         self._page = page
-        self.HOME = Home(self._page, menuOpener = self.open_menu if self.check_platform() else self.change_destination_for_other_platform)
-        self.request_handler = RQ(self._page, callback=self.open_menu if self.check_platform() else self.change_destination_for_other_platform)
+        self.HOME = Home(self._page, menuOpener = self.open_menu)
+        self.request_handler = RQ(self._page, callback=self.open_menu )
         self.NAVRAIL = Navrail(callback=self.change_destination)
+        self._page.overlay.append(self.NAVRAIL)
        
         # self._page.navigation_bar = Navbar(callback=self.change_destination) if self._page.platform.value!='windows' else None
         self.content_column = Column(expand=True,controls=[self.HOME])
-        self.nav_row = ft.Row(
-            vertical_alignment=ft.CrossAxisAlignment.START,
-            controls =[
-                ft.Container(
-                    border_radius=4, 
-                    bgcolor=colors.BLUE_500,
-                    expand = False,
-                    content = self.NAVRAIL)])
+        # self.nav_row = ft.Row(
+        #     vertical_alignment=ft.CrossAxisAlignment.START,
+        #     controls =[
+        #         ft.Container(
+        #             border_radius=4, 
+        #             bgcolor=colors.BLUE_500,
+        #             expand = False,
+        #             content = None)])
 
         self.MainRow = ft.Row(
             vertical_alignment=ft.CrossAxisAlignment.START,
             expand=True,
             controls= [
-                ft.Container(
-                    height = 600, 
-                    border_radius=12,
-                    bgcolor=ft.colors.BLUE_500,
-                    content=self.nav_row,
-                    visible=True if self._page.platform.value == 'windows' else False
-                    ),
+                # ft.Container(
+                #     height = 600, 
+                #     border_radius=12,
+                #     bgcolor=ft.colors.BLUE_500,
+                #     content=self.nav_row,
+                #     visible=True if self._page.platform.value == 'windows' else False
+                #     ),
                 self.content_column
                 ])
         
@@ -73,10 +74,15 @@ class MainApp(Column):
             self.update()
             
     def open_menu(self, *args):
+        import time
         print(*args)
+        self.NAVRAIL.visible = True if self.NAVRAIL.visible==False else False
         self.NAVRAIL.width = self.__max_extende_value if self.NAVRAIL.width==0 else 0
+        # self.NAVRAIL.update_controls()
         self.NAVRAIL.update()
         self.update()
+        self._page.update()
+        print(self.NAVRAIL.visible)
         
     def check_platform(self,*args):
         if self._page.platform.value == 'windows':
