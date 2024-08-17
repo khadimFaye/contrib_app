@@ -135,7 +135,7 @@ class Home(Container):
             controls = [
                 Row(
                     alignment=MainAxisAlignment.START,
-                    controls = [IconButton(icon=icons.MENU_ROUNDED,icon_color=colors.BLACK87,size = 30,  on_click=self.open_menu)] if self._page.platform.value =='windows' else [menuBarButton(callback=self.open_menu)]),
+                    controls = [IconButton(icon=icons.MENU_ROUNDED,icon_color=colors.BLACK87,on_click=self.open_menu)] if self._page.platform.value =='windows' else [menuBarButton(callback=self.open_menu)]),
                 # Row(expand=True,alignment = MainAxisAlignment.START,controls = [
                 #     Card(
                 #         expand = 1,

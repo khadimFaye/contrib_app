@@ -7,6 +7,7 @@ import time
 from datetime import datetime
 from dotenv import load_dotenv
 from ..custums.snackbar import CustomSnackbar
+from app.custums.navigationbar import menuBarButton
 
 # dotenv_path = os.path.join(os.getcwd(),'FRONTEND','resources','.env')
 # load_dotenv(dotenv_path)
@@ -17,11 +18,13 @@ ENDPOINT = "fetch_requests"
 
 class RQ(Container):
     # __key__ = Key().load_key() or Key().generate_fernet_key(autosave=True)
-    def __init__(self, page):
+    def __init__(self, page, callback):
         self._page = page
         self.counter = Text(value = None, color=colors.BLACK54, size = 14, weight='w700')
         self.listview = ListView(spacing=8)
         self.list_users = GridView(runs_count=1,spacing=8,)
+        self.menu_opener = callback
+        self.navbar = menuBarButton(callback=self.menu_opener) if not self.check_platform() else IconButton(icon = icons.MENU_ROUNDED, icon_color=colors.BLACK87, on_click=lambda e :self.menu_opener(e))
 
         super().__init__(
             bgcolor=colors.with_opacity(0.95, 'white'),
@@ -38,7 +41,15 @@ class RQ(Container):
                         content=Row(
                                 controls=[
                                 Row(
+                                    
                                     alignment=MainAxisAlignment.START, 
+                                    controls = [self.navbar],
+                                    
+                                ),
+                                
+                                Row(
+                                    expand = True,
+                                    alignment=MainAxisAlignment.CENTER, 
                                         controls = [
                                             
                                             Icon(
@@ -129,9 +140,6 @@ class RQ(Container):
             
             data = self.send_translate_request()
             self.counter.value = str(len(data)) if data is not None else str('0')
-        
-        
-       
             if data is not None and data !=[]:
                 
                 for i in data:
@@ -188,4 +196,10 @@ class RQ(Container):
                 image,
                 Text(value=message, color = colors.BLACK87)]
             )
-                
+    
+    def check_platform(self,*args):
+        if self._page.platform.value == 'windows':
+            return True
+        return False
+        
+# <
