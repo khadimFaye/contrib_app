@@ -85,7 +85,10 @@ class Loading(Container):
 
             activce_user = payload.get('sub')
             if activce_user is None:
-                raise ValueError('sessione terminata fai il login di nuovo')
+                print(str(e))
+                self.set_snackbar(message='sessione terminata fai il login di nuovo:(', color='red')
+                self._page.go('login')
+                # raise ValueError('sessione terminata fai il login di nuovo')
             #     raise HTTPException(
             #     status_code=status.HTTP_401_UNAUTHORIZED,
             #     detail='sessione terminata fai il login di nuovo'
@@ -94,9 +97,10 @@ class Loading(Container):
 
                 # response = requests.post(url=url,)
         except ExpiredSignatureError as e:
+            print(str(e))
             self.set_snackbar(message='sessione terminata fai il login di nuovo:(', color='red')
             self._page.go('login')
-            raise ValueError('sessione terminata fai il login di nuovo')
+            # raise ValueError('sessione terminata fai il login di nuovo')
             # raise HTTPException(
             #     status_code=status.HTTP_401_UNAUTHORIZED,
             #     detail='sessione terminata fai il login di nuovo'
@@ -116,7 +120,7 @@ class Loading(Container):
             #     status_code=status.HTTP_401_UNAUTHORIZED,
             #     detail='sessione terminata fai il login di nuovo'
             # )
-            raise AttributeError(name='sessione terminata fai il login di nuovo')
+            # raise AttributeError(name='sessione terminata fai il login di nuovo')
         
         
             
