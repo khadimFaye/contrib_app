@@ -64,7 +64,7 @@ class Login(Container):
             focused_border_color=colors.PURPLE_900,
             bgcolor=colors.WHITE,
             max_length=30,
-            helper_text='user@gmail.com',
+            helper_text='nome utente',
             filled=True,
 
         )
