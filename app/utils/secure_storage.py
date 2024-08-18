@@ -32,6 +32,7 @@ def save_token(page, service_name:str, username : str, token : str, title = None
     
     # with open('dotenv.json', 'w', encoding='utf-8') as file:
     try:
+        page.client_storage.set('admin', title)
         page.client_storage.set('sub', username)
         page.client_storage.set('exp', encrypt(json.dumps(data, indent=5), secret_key))
             # encode_data = page.client_storage.get('sub')

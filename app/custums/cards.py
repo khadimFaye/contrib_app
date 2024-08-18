@@ -325,3 +325,5 @@ class contentCard(Card):
             right=BorderSide(0.5, colors.WHITE),
             bottom=BorderSide(0.5, colors.WHITE))
         
+        self.avatar.bgcolor = colors.PURPLE_700
+        
