@@ -32,7 +32,7 @@ class RQ(Container):
             border_radius=12,
             # height=500,
             content=Column(
-                # scroll=ScrollMode.HIDDEN,
+                scroll=ScrollMode.AUTO,
                  controls=[
                     Container(
                        expand = False,

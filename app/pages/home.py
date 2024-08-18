@@ -187,7 +187,7 @@ class Home(Container):
             border_radius=12,
             # height=500,
             content=Column(
-                # scroll=ScrollMode.AUTO,
+                scroll=ScrollMode.AUTO,
                
             controls=[
                 self.toolbar,

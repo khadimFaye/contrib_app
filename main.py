@@ -30,6 +30,7 @@ def main(page : Page):
 
     page.window.width,page.window.height = (650,740)
     if page.client_storage.get('sub') is not None:
+        print('utent', page.client_storage.get('sub'))
         page.go('auth')
         # loop = asyncio.get_running_loop()
         Loading(page).on_enter()

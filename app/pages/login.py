@@ -98,7 +98,7 @@ class Login(Container):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     expand =True,spacing = 10,controls=[
                     Container(),
-                    Text(value='dala ak jam :)'.title(),size = 20, color=ft.colors.BLACK87, weight = ft.FontWeight.BOLD),
+                    Text(value='dalal ak jam :)'.title(),size = 20, color=ft.colors.BLACK87, weight = ft.FontWeight.BOLD),
                     Text(value = 'nguir mana dugu ci platform bi dugeul ak sa compte'.title(),size = 14, color = ft.colors.BLACK54, ),
                     #space
                     Container(height = 20),
