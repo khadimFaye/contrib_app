@@ -317,7 +317,7 @@ class Home(Container):
         self.loading()
         for i, j in enumerate(scheda):
             
-            n = i+1
+            n = self.custom_dropdown.value
             domanda = j.get('domanda')
             actual_traduction = j.get('wolof')
             status = True if actual_traduction!='jappandi wull' else False
