@@ -32,7 +32,7 @@ class RQ(Container):
             border_radius=12,
             # height=500,
             content=Column(
-                scroll=ScrollMode.AUTO,
+                # scroll=ScrollMode.AUTO,
                  controls=[
                     Container(
                        expand = False,
@@ -104,9 +104,9 @@ class RQ(Container):
                                     self.listview])),
                         icon=icons.INBOX_ROUNDED),
 
-                    Tab(text="user management",
+                    Tab(text="gestione utenti".capitalize(),
                 content=Container(
-                    content=Text("This is Tab 1")
+                    content=Text("tab dei utenti")
                 )),]
             ),
            

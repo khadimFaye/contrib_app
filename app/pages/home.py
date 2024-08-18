@@ -215,7 +215,7 @@ class Home(Container):
                 
                 Row(alignment=MainAxisAlignment.START,controls = [Text(value = 'Risultati:',weight='w700',size=16, color = colors.BLACK54)]),
                 Row(alignment=MainAxisAlignment.SPACE_EVENLY,
-                    expand=True,
+                    expand=False,
                        controls = [
                             Column(scroll=ScrollMode.HIDDEN,expand = True,controls = [self.listview]),
                         
