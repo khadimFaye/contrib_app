@@ -291,7 +291,7 @@ class RequestCard(Card):
 
 
             url = f'{Url_base}/{Endpoint}'
-            headers = {'Authorization':f"Bearer {get_token('mytoken', self._page.client_storage.get('sub'))}"}
+            headers = {'Authorization':f"Bearer {get_token(self._page, 'mytoken', self._page.client_storage.get('sub'))}"}
             params = {'argomento' : self.argomento, 'index' : self.index, 'ID' : self.questionIndex, 'value':self.traduction_label.value}
             response = requests.post(url=url, headers=headers, params=params)
             if response.status_code==200:
@@ -314,7 +314,7 @@ class RequestCard(Card):
             
             url = 'https://samaserver-51970f571916.herokuapp.com/delete_requests'
                 
-            headers = {'Authorization':f"Bearer {get_token(self.page, 'mytoken',self._page.client_storage.get('sub'))}"}
+            headers = {'Authorization':f"Bearer {get_token(self.page, 'mytoken', self._page.client_storage.get('sub'))}"}
             params = {'request_id' : self.request_id}
             response = requests.post(url=url, headers=headers, params=params)
             if response.status_code==200:

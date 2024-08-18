@@ -83,7 +83,7 @@ class Login(Container):
 
         )
 
-        self.sumbit_button = ft.FilledButton(text='dugal'.title(), style=ft.ButtonStyle(bgcolor = ft.colors.PURPLE_500, color='white'),on_click=self.authenticate)
+        self.sumbit_button = ft.FilledButton(text='accedi'.title(), style=ft.ButtonStyle(bgcolor = ft.colors.PURPLE_500, color='white'),on_click=self.authenticate)
         self.content = Row(
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
             expand = True,

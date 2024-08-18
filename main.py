@@ -15,7 +15,7 @@ from app.pages.login import Login
 
 
 
-# async def install_dependesy():
+# async def install_dependesy):
 #     await micropip.install('requests', verbose=True)
     
 def main(page : Page):

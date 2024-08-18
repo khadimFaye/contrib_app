@@ -255,6 +255,9 @@ class Home(Container):
             
             elif response.status_code==401:
                return False
+
+            elif response.status_code==204:
+                return '0'
                 
             return None
         except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError) as e:
@@ -279,6 +282,23 @@ class Home(Container):
             self.set_snackbar(message=f'stai per essere riindirzzato tra {self.__counter}', color=colors.YELLOW_800)
             self.update()
             self.start_countdown()
+            return False
+        
+        elif scheda =='0':
+           
+            self.listview.controls = [
+               Column(
+                   spacing = 8,
+                   controls = [
+                       Container(),
+                       Row(alignment=MainAxisAlignment.CENTER,controls = [Image(src = '/no_data.gif')],),
+                       Container(),
+                       Row(alignment=MainAxisAlignment.CENTER,controls = [Text(text_align=TextAlign.CENTER,value = f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato', weight='w500', color=colors.BLACK87)],),
+                    ]
+               )]
+            # self.set_snackbar(message=f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato]', color=colors.YELLOW_800)
+            self.update()
+            
             return False
             
         self.showWidgets(scheda, key)
