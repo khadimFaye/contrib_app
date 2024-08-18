@@ -296,7 +296,7 @@ class Home(Container):
                        Container(),
                        Row(alignment=MainAxisAlignment.CENTER,controls = [Image(src = '/no_data.gif')],),
                        Container(),
-                       Row(expand = False, alignment=MainAxisAlignment.CENTER,controls = [Text(expand = True,text_align=TextAlign.CENTER,value = f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato', weight='w500', color=colors.BLACK87)],),
+                       Row(expand = False, alignment=MainAxisAlignment.CENTER,controls = [Text(expand = True,text_align=TextAlign.CENTER,value = f'indice selezionato [{n}] é maggiore delle schede disponibili per Argomento selezionato', weight='w500', color=colors.BLACK87)],),
                     ]
                )]
             # self.set_snackbar(message=f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato]', color=colors.YELLOW_800)
