@@ -52,6 +52,7 @@ class Home(Container):
                 )   
             ]
         )
+        self.risultati_label = Text(visible=False, value = 'Risultati:',weight='w700',size=16, color = colors.BLACK54)
 
         #incoming notifications
         self.notifications = IconButton(
@@ -213,7 +214,7 @@ class Home(Container):
                         self.custom_dropdown,
                     ]),
                 
-                Row(alignment=MainAxisAlignment.START,controls = [Text(value = 'Risultati:',weight='w700',size=16, color = colors.BLACK54)]),
+                Row(alignment=MainAxisAlignment.START,controls = [self.risultati_label]),
                 Row(alignment=MainAxisAlignment.SPACE_EVENLY,
                     expand=False,
                        controls = [
@@ -234,6 +235,7 @@ class Home(Container):
         return False
     def clear(self, *args):
         self.listview.controls = []
+        self.risultati_label.visible = False
         self.update()
 
 
@@ -288,12 +290,13 @@ class Home(Container):
            
             self.listview.controls = [
                Column(
+                   expand = True,
                    spacing = 8,
                    controls = [
                        Container(),
                        Row(alignment=MainAxisAlignment.CENTER,controls = [Image(src = '/no_data.gif')],),
                        Container(),
-                       Row(alignment=MainAxisAlignment.CENTER,controls = [Text(text_align=TextAlign.CENTER,value = f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato', weight='w500', color=colors.BLACK87)],),
+                       Row(expand = False, alignment=MainAxisAlignment.CENTER,controls = [Text(expand = True,text_align=TextAlign.CENTER,value = f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato', weight='w500', color=colors.BLACK87)],),
                     ]
                )]
             # self.set_snackbar(message=f'indice selezionato [{n}] é maggiore delle schede disponibile per Argomento selezionato]', color=colors.YELLOW_800)
@@ -330,7 +333,9 @@ class Home(Container):
             # self.listview.update()
             # self._page.update()
         time.sleep(0.9)
+        self.risultati_label.visible=True
         self.listview.controls = controls
+        
         self.update()
 
   
