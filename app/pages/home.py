@@ -100,7 +100,7 @@ class Home(Container):
                     value = 'n/d',
                     width=180, 
                     height=21, 
-                    overflow=TextOverflow.FADE, 
+                    overflow=TextOverflow.ELLIPSIS, 
                     color=colors.BLACK87, 
                     weight='w600')])
         
@@ -114,7 +114,7 @@ class Home(Container):
             bgcolor='white',
             border_radius=12,
             padding = 10,
-            tooltip=self.selected_arg.controls[0].value,
+            tooltip=None,
             # height=50,
             border=Border(top=BorderSide(1, 'black'), left=BorderSide(1, 'black'), right=BorderSide(1, 'black'),bottom=BorderSide(1, 'black')),
             alignment=Alignment(x=50,y=50),
@@ -229,6 +229,7 @@ class Home(Container):
 
     def is_selected(self, *args):
         if self.selected_arg.controls[-1].value!='n/d' and self.custom_dropdown.value is not None:
+            self.Argoment_selector.tooltip =self.selected_arg.controls[0].value
             return True
         return False
     def clear(self, *args):

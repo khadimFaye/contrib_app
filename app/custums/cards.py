@@ -230,7 +230,7 @@ class contentCard(Card):
         data=self.mini_height
         )
     
-    def extend(self, e):
+    def extend(self, *args):
         if self.container.data<self.max_height:
             #imposta l'animazione dell ingrandimento 
             self.container.animate_size = Animation(260, curve=AnimationCurve.FAST_OUT_SLOWIN)
@@ -294,6 +294,10 @@ class contentCard(Card):
         response = requests.post(url=url, params=params, headers=headers)
         if response.status_code ==200:
             self.set_snackbar('richiesta inviata!', 'green')
+            self.color = colors.PURPLE_200
+            self.extend()
+            self.update_status_request()
+           
         else:
             self.set_snackbar('richiesta non inviata!', 'red')
       
@@ -302,3 +306,22 @@ class contentCard(Card):
         snackbar = CustomSnackbar(message=message, bgcolor=colors.with_opacity(0.70, f'{color}'))
         self._page.add(snackbar)
         self._page.open(snackbar)
+    
+    def update_status_request(self, *args):
+        self.request_status.tooltip = 'inviata'
+        self.request_status.border = Border(
+
+            top=BorderSide(5.0, colors.YELLOW_700), 
+            left = BorderSide(5.0, colors.YELLOW_700), 
+            right=BorderSide(5.0, colors.YELLOW_700),
+            bottom=BorderSide(5.0, colors.YELLOW_700))
+        
+        self.status.content.controls[-1].value , self.status.content.controls[-1].color = ('richiesta inviata', 'white')
+        self.status.content.controls[-2].name, self.status.content.controls[-2].color = (icons.UPCOMING, 'white')
+        self.status.border =  Border(
+
+            top=BorderSide(0.5, colors.WHITE), 
+            left = BorderSide(0.5, colors.WHITE), 
+            right=BorderSide(0.5, colors.WHITE),
+            bottom=BorderSide(0.5, colors.WHITE))
+        

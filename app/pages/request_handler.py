@@ -160,7 +160,7 @@ class RQ(Container):
                     self.update()
                     
             else:
-                if os.getenv('admin')!='True':
+                if self._page.client_storage.get('admin')!='True':
                     self.listview.controls.append(self.excpetion_illustration(message = 'Accedi con un account che dispone dell\'autorizzazione!', image = Image(src='/No_Auth.gif')))
                     self.update()
                 else:
