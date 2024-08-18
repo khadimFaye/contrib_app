@@ -61,7 +61,7 @@ class MainApp(Column):
             self.update()
             
     def change_destination_for_other_platform(self, e):
-        print(e)
+        (e)
         destination = e.control.content.controls[-1].value
         index_map = {
             'Home':self.HOME,

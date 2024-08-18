@@ -19,7 +19,8 @@ from app.pages.login import Login
 #     await micropip.install('requests', verbose=True)
     
 def main(page : Page):
-    
+    # page.client_storage.set('id', 'ciaoo')
+    # print(page.client_storage.get('id'))
     page.add(TextButton(text='ciaaao'))
     page.theme_mode = 'light'
     page.add(SafeArea(expand=True, content = Login(page)))
@@ -27,8 +28,8 @@ def main(page : Page):
 
     page.bgcolor = colors.PURPLE_800 if page.platform.value =='windows'  else 'white'
 
-    page.window_width,page.window_height = (650,740)
-    if os.path.exists('dotenv.json'):
+    page.window.width,page.window.height = (650,740)
+    if page.client_storage.get('sub') is not None:
         page.go('auth')
         # loop = asyncio.get_running_loop()
         Loading(page).on_enter()
@@ -41,7 +42,7 @@ def main(page : Page):
   
     
     
-ft.app(target = main, assets_dir='assets', port=8000, host="0.0.0.0")
+ft.app(target = main, assets_dir='assets', view=AppView.WEB_BROWSER)
 # ft.app(target = main, assets_dir='assets')
 # ft.app(target =main, view=ft.AppView.WEB_BROWSER, port= 40400, host= '192.168.1.16',export_asgi_app=False)
 

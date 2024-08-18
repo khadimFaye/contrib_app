@@ -78,8 +78,8 @@ class Loading(Container):
         time.sleep(1.2)
         try:
 
-            username = os.getenv('sub')
-            token = get_token(service_name='mytoken', username=username)
+            username = self._page.client_storage.get('sub')
+            token = get_token(page=self._page, service_name='mytoken', username=username)
            
             payload = jwt.decode(token = token, key=os.getenv('secret_key'), algorithms=[os.getenv('ALGORITHM')])
 

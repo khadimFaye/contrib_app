@@ -289,7 +289,7 @@ class contentCard(Card):
     def send_translate_request(self,*args):
         url = 'https://samaserver-51970f571916.herokuapp.com/send_translation_request'
         params = {"argomento":self.argomento,"value" :self.traduction_label.value,"n": self.n, "index": self.index,"question":self.text}
-        token = get_token("mytoken", os.getenv('sub'))
+        token = get_token(self._page, "mytoken", self._page.client_storage.get('sub'))
         headers = {'Authorization' : f'Bearer {token}'}
         response = requests.post(url=url, params=params, headers=headers)
         if response.status_code ==200:

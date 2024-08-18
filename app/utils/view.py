@@ -62,7 +62,7 @@ def view_handler(page):
 
 
 def change_route(page,handler=view_handler):
-    print(page.route) 
+    # print(page.route) 
     page.views.clear() 
     page.views.append(handler(page)[page.route])
     page.update()

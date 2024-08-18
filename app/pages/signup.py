@@ -233,50 +233,50 @@ class Signup(Container):
             
      
     
-    def on_enter(self,*args):
+    # def on_enter(self,*args):
       
-        try:
+    #     try:
 
-            username = os.getenv('sub')
-            token = get_token('mytoken', username)
-            payload = jwt.decode(token = token, key=os.getenv('SECRET_KEY'), algorithms=[os.getenv('ALGORITHM')])
+    #         username = os.getenv('sub')
+    #         token = get_token(self._page, 'mytoken', username)
+    #         payload = jwt.decode(token = token, key=os.getenv('SECRET_KEY'), algorithms=[os.getenv('ALGORITHM')])
 
-            activce_user = payload.get('sub')
-            if activce_user is None:
-                raise ValueError('sessione terminata fai il login di nuovo')
-            #     raise HTTPException(
-            #     status_code=status.HTTP_401_UNAUTHORIZED,
-            #     detail='sessione terminata fai il login di nuovo'
-            # )
+    #         activce_user = payload.get('sub')
+    #         if activce_user is None:
+    #             raise ValueError('sessione terminata fai il login di nuovo')
+    #         #     raise HTTPException(
+    #         #     status_code=status.HTTP_401_UNAUTHORIZED,
+    #         #     detail='sessione terminata fai il login di nuovo'
+    #         # )
 
 
-                # response = requests.post(url=url,)
-        except ExpiredSignatureError as e:
-            raise ValueError('sessione terminata fai il login di nuovo')
-            # raise HTTPException(
-            #     status_code=status.HTTP_401_UNAUTHORIZED,
-            #     detail='sessione terminata fai il login di nuovo'
-            # )
-        except JWTError:
-            raise ValueError('sessione terminata fai il login di nuovo')
-            # raise HTTPException(
-            #     status_code=status.HTTP_401_UNAUTHORIZED,
-            #     detail='sessione terminata fai il login di nuovo'
-            # )
-        except AttributeError:
-            self.set_snackbar(message='sessione terminata fai il login di nuovo:(', color='red')
-            raise ValueError('sessione terminata fai il login di nuovo')
-            # raise HTTPException(
-            #     status_code=status.HTTP_401_UNAUTHORIZED,
-            #     detail='sessione terminata fai il login di nuovo'
-            # )
+    #             # response = requests.post(url=url,)
+    #     except ExpiredSignatureError as e:
+    #         raise ValueError('sessione terminata fai il login di nuovo')
+    #         # raise HTTPException(
+    #         #     status_code=status.HTTP_401_UNAUTHORIZED,
+    #         #     detail='sessione terminata fai il login di nuovo'
+    #         # )
+    #     except JWTError:
+    #         raise ValueError('sessione terminata fai il login di nuovo')
+    #         # raise HTTPException(
+    #         #     status_code=status.HTTP_401_UNAUTHORIZED,
+    #         #     detail='sessione terminata fai il login di nuovo'
+    #         # )
+    #     except AttributeError:
+    #         self.set_snackbar(message='sessione terminata fai il login di nuovo:(', color='red')
+    #         raise ValueError('sessione terminata fai il login di nuovo')
+    #         # raise HTTPException(
+    #         #     status_code=status.HTTP_401_UNAUTHORIZED,
+    #         #     detail='sessione terminata fai il login di nuovo'
+    #         # )
             
        
-        self.set_snackbar(message='hai loggato con successo!', color='green')
-        self._page.go('/')
+    #     self.set_snackbar(message='hai loggato con successo!', color='green')
+    #     self._page.go('/')
 
-    def start(self, *args):
-        thread = threading.Thread(target=self.on_enter)
-        thread.start()
+    # def start(self, *args):
+    #     thread = threading.Thread(target=self.on_enter)
+    #     thread.start()
 
             

@@ -74,7 +74,7 @@ class Home(Container):
             icon_color = colors.GREY_500)
         
         self.profile = CircleAvatar(
-            content=Icon(tooltip = os.getenv('sub'),name = icons.PERSON))
+            content=Icon(tooltip = self._page.client_storage.get('sub'),name = icons.PERSON))
         
         # self.username = Text(
         #     value = os.getenv('sub'),
@@ -242,7 +242,7 @@ class Home(Container):
             #?argomento={key}&index={n}
             url = f'{URLBASE}{ENDPOINT}'
             # print('username', os.getenv('sub'))
-            token = get_token(service_name='mytoken', username=os.getenv('sub'))
+            token = get_token(page=self._page, service_name='mytoken', username=self._page.client_storage.get('sub'))
             
         
             headers = {'Authorization' : f'Bearer {token}'}
