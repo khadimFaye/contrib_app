@@ -17,10 +17,32 @@ from app.pages.login import Login
 
 # async def install_dependesy):
 #     await micropip.install('requests', verbose=True)
+class log_template(Card):
+    def __init__(self, autore:str =None , argomento:str = None, detail:str='ha fatto una richiesta'):
+        super().__init__(
+            color='white',
+            surface_tint_color='white',
+            content= Container(
+                padding = 10,
+                content = Column(
+                controls = [
+                    #autore container
+                    Row(
+                        controls = [Container(border_radius=12, bgcolor=colors.PURPLE_600, content=Row([Icon(name = icons.PERSON, color='white'), Text(value=autore, color='white')]))]
+                    ),
+                    Divider(),
+                    #deatil container
+                    Row(
+                        alignment=MainAxisAlignment.CENTER,
+                        controls = [Container(padding=10, content=Text(expand=True, value = detail, text_align=TextAlign.LEFT, color = colors.BLACK87))]
+                    ) 
+                ]
+            )
+        )
+    )
     
 def main(page : Page):
-    # page.client_storage.set('id', 'ciaoo')
-    # print(page.client_storage.get('id'))
+
     page.add(TextButton(text='ciaaao'))
     page.theme_mode = 'light'
     page.add(SafeArea(expand=True, content = Login(page)))
@@ -47,7 +69,3 @@ ft.app(target = main, assets_dir='assets', view=AppView.WEB_BROWSER)
 # ft.app(target = main, assets_dir='assets')
 # ft.app(target =main, view=ft.AppView.WEB_BROWSER, port= 40400, host= '192.168.1.16',export_asgi_app=False)
 
-
-
-
-                    
