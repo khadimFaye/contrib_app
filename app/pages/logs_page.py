@@ -75,7 +75,7 @@ class LogsPage(Container):
             Container(),
             
             
-            Column(padding = 10, expand=True,scroll=ScrollMode.HIDDEN,controls=[self.listview])
+            Column(expand=True,scroll=ScrollMode.HIDDEN,controls=[self.listview])
             #divider
 
 

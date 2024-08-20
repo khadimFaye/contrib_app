@@ -169,8 +169,6 @@ class Login(Container):
                 
             ))
         print('log', len(self._page.data))
-        self.badge.text = len(self._page.data['logs'])
-        self.badge.update()
         self.update()
      
     
