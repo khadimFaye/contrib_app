@@ -5,6 +5,7 @@ from app.custums.dialog import Dialog
 from app.utils.functions import get_schede
 from app.custums.snackbar import CustomSnackbar
 from app.custums.navigationbar import menuBarButton
+from app.custums.log_template import log_template
 
 
 
@@ -30,7 +31,7 @@ class Home(Container):
     # my_key = Key().load_key() or None
  
     
-    def __init__(self,page, menuOpener):
+    def __init__(self,page, menuOpener ):
         self._page = page
         self.dialog = Dialog(callback=self.select)
         self._page.add(self.dialog)
@@ -61,7 +62,8 @@ class Home(Container):
         )
         self.inbox = IconButton(
             icon = icons.INBOX_ROUNDED,
-            tooltip='box delle requeste'
+            tooltip='box delle requeste',
+            on_click=self.open_menu
         )
 
         self.custom_dropdown = CustomDropdown(
@@ -87,12 +89,12 @@ class Home(Container):
         
         self.badge = Badge(
             bgcolor = 'red',
-            text = '3', 
+            text = '0', 
             text_color='white',
             text_style=TextStyle(
                 color=colors.WHITE, 
                 weight='W400',),
-                content =self.notifications if os.getenv('admin') in ['False', 'None'] else self.inbox)
+                content =self.inbox)
         
         self.selected_arg = Row(
             expand=True,
@@ -227,6 +229,10 @@ class Home(Container):
             ),
             expand=True
         )
+    def refresh_logs(self, *args):
+        
+        self.badge.text = len(self._page.data['logs'])
+        self.update()
 
     def is_selected(self, *args):
         if self.selected_arg.controls[-1].value!='n/d' and self.custom_dropdown.value is not None:
@@ -322,7 +328,8 @@ class Home(Container):
             actual_traduction = j.get('wolof')
             status = True if actual_traduction!='jappandi wull' else False
             card = contentCard(
-            page = self._page, 
+            page = self._page,
+            badge = self.badge,
             n=str(n), 
             index=i,
             key=key,
@@ -335,7 +342,6 @@ class Home(Container):
         time.sleep(0.9)
         self.risultati_label.visible=True
         self.listview.controls = controls
-        
         self.update()
 
   
@@ -366,5 +372,7 @@ class Home(Container):
             if self.__counter==0:
                 self._page.go('login')
         threading.Thread(target=coundown).start()
+    
+    
         
         

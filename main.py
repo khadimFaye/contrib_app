@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 import os
 import threading
 import asyncio
+from app.pages.logs_page import LogsPage
+
 
 from app.pages.loading import Loading
 
@@ -12,45 +14,36 @@ print(load_dotenv(dotenv_path))
 
 from app.utils.view import view_handler, change_route
 from app.pages.login import Login
+from app.pages.main_page import MainApp
 
 
 
 # async def install_dependesy):
 #     await micropip.install('requests', verbose=True)
-class log_template(Card):
-    def __init__(self, autore:str =None , argomento:str = None, detail:str='ha fatto una richiesta'):
-        super().__init__(
-            color='white',
-            surface_tint_color='white',
-            content= Container(
-                padding = 10,
-                content = Column(
-                controls = [
-                    #autore container
-                    Row(
-                        controls = [Container(border_radius=12, bgcolor=colors.PURPLE_600, content=Row([Icon(name = icons.PERSON, color='white'), Text(value=autore, color='white')]))]
-                    ),
-                    Divider(),
-                    #deatil container
-                    Row(
-                        alignment=MainAxisAlignment.CENTER,
-                        controls = [Container(padding=10, content=Text(expand=True, value = detail, text_align=TextAlign.LEFT, color = colors.BLACK87))]
-                    ) 
-                ]
-            )
-        )
-    )
+
     
 def main(page : Page):
-
-    page.add(TextButton(text='ciaaao'))
+    page.data = {'control' : None, 'logs' : []}
+    def on_message(message):
+       page.data['logs'].append(message)
+       logs_storage = page.data['logs']
+       page.client_storage.set('logs', logs_storage)
+       page.update()
+       
+    page.pubsub.subscribe(on_message)
+       
+       
+       
     page.theme_mode = 'light'
-    page.add(SafeArea(expand=True, content = Login(page)))
+    # page.add(SafeArea(expand=True, content = Login(page)))
     page.on_route_change = lambda _ : change_route(page=page)
+    
 
     page.bgcolor = colors.PURPLE_800 if page.platform.value =='windows'  else 'white'
 
     page.window.width,page.window.height = (650,740)
+    page.add(LogsPage(page, callback=MainApp(page).open_menu))
+    
     if page.client_storage.get('sub') is not None:
         print('utent', page.client_storage.get('sub'))
         page.go('auth')

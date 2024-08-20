@@ -9,13 +9,14 @@ import os
 # from ..utils.encription import Key, decrypt
 from ..utils.secure_storage import *
 from .snackbar import CustomSnackbar
+from.log_template import log_template
 # # dotenv_path = os.path.join(os.getcwd(),'FRONTEND','resources','.env')
 # load_dotenv(dotenv_path)
 
 
 class contentCard(Card):
     # my_key = Key().load_key() or None
-    def __init__(self, page, key:str, n:str, index, text = None, *args, traduction_text : str = 'aSDJFGUYWGHeuy r tuywetfuyasdtfuytsuy sdtuyf t usydtfuytweuyt uywefuysgdfuyftuy   teqwfiuypiuAODY IYT UYTSYUFT yagtgfuyatSUYFT BUY',STATUS :bool = False):
+    def __init__(self, page, key:str, n:str, index, text = None, *args, badge :Control = None,  traduction_text : str = 'aSDJFGUYWGHeuy r tuywetfuyasdtfuytsuy sdtuyf t usydtfuytweuyt uywefuysgdfuyftuy   teqwfiuypiuAODY IYT UYTSYUFT yagtgfuyatSUYFT BUY',STATUS :bool = False):
         #crea un istanza di page
         self._page = page
         self.argomento = key
@@ -23,6 +24,7 @@ class contentCard(Card):
         self.n = n
         self.text = text
         self.dialog = ConfirmationDialog(title='avviso', callback=self.confirma)
+        self.badge = badge
         
 
         
@@ -326,4 +328,16 @@ class contentCard(Card):
             bottom=BorderSide(0.5, colors.WHITE))
         
         self.avatar.bgcolor = colors.PURPLE_700
+        self.send_log()
+    
+    def send_log(self, *args):
+        self._page.pubsub.send_all(
+            log_template(
+                autore=self._page.client_storage.get('sub')
+                
+            ))
+        print('log', len(self._page.data))
+        self.badge.text = len(self._page.data['logs'])
+        self.badge.update()
+        self.update()
         

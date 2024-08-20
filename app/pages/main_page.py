@@ -4,6 +4,7 @@ from ..custums.navigationRail import Navrail
 from app.custums.navigationbar import menuBarButton
 from .home import Home
 from .request_handler import RQ
+from app.pages.logs_page import LogsPage
 # from ..utils.view import view_handler, change_route
 
 
@@ -13,9 +14,11 @@ class MainApp(Column):
     def __init__(self, page):
         self._page = page
         self.HOME = Home(self._page, menuOpener = self.open_menu)
-        self.request_handler = RQ(self._page, callback=self.open_menu )
+        self.request_handler = RQ(self._page, callback=self.open_menu , badge=self.HOME.badge)
         self.NAVRAIL = Navrail(callback=self.change_destination)
+        self.LogPage = LogsPage(self._page, self.open_menu)
         self._page.overlay.append(self.NAVRAIL)
+        self._page.data['control'] = self.HOME.badge
        
         # self._page.navigation_bar = Navbar(callback=self.change_destination) if self._page.platform.value!='windows' else None
         self.content_column = Column(expand=True,controls=[self.HOME])
@@ -49,19 +52,30 @@ class MainApp(Column):
             ]
         )
     def change_destination(self, index):
+        print('cambito')
         index_map = {
             '0':self.HOME,
-            '1' : self.request_handler
+            '2' : self.request_handler,
+            '1' : self.LogPage
         }
 
         if index_map.get(str(index)) is not None:
-          
+                
+        
             self.content_column.controls=[index_map[str(index)]]
-            self.open_menu()
             self.update()
             
+            if index==0:
+                self.HOME.refresh_logs()
+                    
+            elif index ==2:
+                self.LogPage.flag=True if len(self._page.data['logs'])!=0 else False
+                if self.LogPage:
+                    self.LogPage.listview.controls = self._page.client_storage.get('logs')
+            self.open_menu()
+            
     def change_destination_for_other_platform(self, e):
-        (e)
+       
         destination = e.control.content.controls[-1].value
         index_map = {
             'Home':self.HOME,
@@ -74,15 +88,14 @@ class MainApp(Column):
             self.update()
             
     def open_menu(self, *args):
-        import time
-        print(*args)
+        print(args)
+        
         self.NAVRAIL.visible = True if self.NAVRAIL.visible==False else False
         self.NAVRAIL.width = self.__max_extende_value if self.NAVRAIL.width==0 else 0
         # self.NAVRAIL.update_controls()
         self.NAVRAIL.update()
         self.update()
         self._page.update()
-        print(self.NAVRAIL.visible)
         
     def check_platform(self,*args):
         if self._page.platform.value == 'windows':

@@ -5,6 +5,7 @@ import requests
 from ..utils.secure_storage import *
 from dotenv import load_dotenv
 from .snackbar import CustomSnackbar
+from app.custums.log_template import admin_log_template
 
 dotenv_path ='.env'
 load_dotenv(dotenv_path)
@@ -13,7 +14,7 @@ Url_base = 'https://samaserver-51970f571916.herokuapp.com'
 Endpoint = 'translation_aprovation'
 
 class RequestCard(Card):
-    def __init__(self, page, refresh, request_id, username : str ,argomento, index, questionIndex:int, question='questo é una prova ?', incoming_traduction_text:str = None , traduction_text : str = 'aSDJFGUYWGHeuy  BUY',timestamp=123.23445, STATUS:bool = False):
+    def __init__(self, page, refresh, request_id, username : str ,argomento, index, questionIndex:int, badge = None, question='questo é una prova ?', incoming_traduction_text:str = None , traduction_text : str = 'aSDJFGUYWGHeuy  BUY',timestamp=123.23445, STATUS:bool = False):
         #crea un istanza di page
         self._page = page
         self.argomento = argomento
@@ -22,6 +23,7 @@ class RequestCard(Card):
         self.questionIndex = questionIndex
         self.question = question
         self.refresh = refresh
+        self.badge = badge
         #definisci l'altezza minima é max
         self.mini_height = 150 if self._page.platform.value =='Windows' else 190
         self.max_height = 150*3
@@ -301,6 +303,7 @@ class RequestCard(Card):
                 self.tooltip = 'approvato'
                 self.update()
                 self.delet_request(e)
+                self.send_log(message='ha approvato la richiesta di: ')
             
 
         except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, requests.exceptions.ConnectTimeout) as e:
@@ -333,8 +336,23 @@ class RequestCard(Card):
             print('error ', str(e))
             self.set_snackbar(message='qualcosa é andato storto :(', color='red')
         finally:
-            print('finally')
+            if e.control.text=='rifiuta':
+                self.send_log(message='ha rifiutato la richiesta di: ')
+            # print('finally')
             self.refresh()
+            
+            
+    def send_log(self, message, *args):
+        self._page.pubsub.send_all(
+            admin_log_template(
+                admin=self._page.client_storage.get('sub'),
+                user=self.username.value,
+                detail=message
+                
+            ))
+      
+        self.badge.text = len(self._page.data['logs'])
+        self.update()
         
             
 

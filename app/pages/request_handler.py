@@ -8,6 +8,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from ..custums.snackbar import CustomSnackbar
 from app.custums.navigationbar import menuBarButton
+from app.custums.log_template import admin_log_template
 
 # dotenv_path = os.path.join(os.getcwd(),'FRONTEND','resources','.env')
 # load_dotenv(dotenv_path)
@@ -18,14 +19,14 @@ ENDPOINT = "fetch_requests"
 
 class RQ(Container):
     # __key__ = Key().load_key() or Key().generate_fernet_key(autosave=True)
-    def __init__(self, page, callback):
+    def __init__(self, page, callback, badge = None):
         self._page = page
         self.counter = Text(value = None, color=colors.BLACK54, size = 14, weight='w700')
         self.listview = ListView(spacing=8)
         self.list_users = GridView(runs_count=1,spacing=8,)
         self.menu_opener = callback
         self.navbar =IconButton(icon = icons.MENU_ROUNDED, icon_color=colors.BLACK87, on_click=lambda e :self.menu_opener(e))
-
+        self.badge = badge
         super().__init__(
             bgcolor=colors.with_opacity(0.95, 'white'),
             padding = 15,
@@ -146,6 +147,7 @@ class RQ(Container):
                     print(i['id'])
                     self.listview.controls.append(
                         RequestCard(
+                            badge = self.badge,
                             refresh=self.load_request,
                             page=self._page, 
                             username=i["username"],
@@ -201,5 +203,7 @@ class RQ(Container):
         if self._page.platform.value == 'windows':
             return True
         return False
+
+    
         
 # <

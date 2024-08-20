@@ -19,15 +19,15 @@ class Navrail(NavigationRail):
     __destinations = [
         {
             'icon' : icons.HOME_OUTLINED,
-            'label' : 'homse', 
+            'label' : 'home', 
             'selected_icon' : icons.HOME_FILLED
         },
 
-        # {
-        #     'icon' : icons.HISTORY_OUTLINED,
-        #     'label' : 'logs', 
-        #     'selected_icon' : icons.HISTORY
-        # },
+        {
+            'icon' : icons.HISTORY_OUTLINED,
+            'label' : 'logs', 
+            'selected_icon' : icons.HISTORY
+        },
 
         { 
             'icon' : icons.ADMIN_PANEL_SETTINGS_OUTLINED,
@@ -39,11 +39,11 @@ class Navrail(NavigationRail):
         #     'label' : 'note', 
         #     'selected_icon' : icons.NOTE_ROUNDED
         # },
-        { 
-            'icon' : icons.SETTINGS_OUTLINED,
-            'label' : 'impostazioni', 
-            'selected_icon' : icons.SETTINGS
-        },
+        # { 
+        #     'icon' : icons.SETTINGS_OUTLINED,
+        #     'label' : 'impostazioni', 
+        #     'selected_icon' : icons.SETTINGS
+        # },
 
         
         ]
@@ -60,7 +60,8 @@ class Navrail(NavigationRail):
             elevation=10,
             extended=False,
             visible=False,
-            animate_size=(ft.Animation(duration=100*4, curve=ft.AnimationCurve.EASE_IN_TO_LINEAR)),
+            animate_size=(ft.Animation(duration=100*2, curve=ft.AnimationCurve.EASE_IN_TO_LINEAR)),
+            animate_opacity=(ft.Animation(duration=100*2, curve=ft.AnimationCurve.BOUNCE_IN)),
             # on_animation_end=ft.Animation(duration=2, curve=ft.AnimationCurve.FAST_OUT_SLOWIN),
             # height=200,
             bgcolor=colors.PURPLE_600,
