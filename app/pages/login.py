@@ -35,6 +35,7 @@ from ..utils.secure_storage import *
 from jose import ExpiredSignatureError, JWTError
 # from fastapi import HTTPException, status
 from ..custums.snackbar import CustomSnackbar
+from app.custums.log_template import log_template
 
 dotenv_path = '.env'
 load_dotenv(dotenv_path, override=True)
@@ -152,10 +153,24 @@ class Login(Container):
 
             self.set_snackbar(message='hai loggato con successo!', color='green')
             # load_dotenv(dotenv_path, override=True)
+            self.send_log()
             self._page.go('/')
+            
             # return response.json()['user']
         
         else:
             self.set_snackbar(message='credenziali invalidi:( ', color='red')
+    
+    def send_log(self, *args):
+        self._page.pubsub.send_all(
+            log_template(
+                autore=self._page.client_storage.get('sub'),
+                detail='ha fatto login!'
+                
+            ))
+        print('log', len(self._page.data))
+        self.badge.text = len(self._page.data['logs'])
+        self.badge.update()
+        self.update()
      
     
