@@ -232,6 +232,7 @@ class Home(Container):
     def refresh_logs(self, *args):
         
         self.badge.text = len(self._page.data['logs'])
+        self.badge.update()
         self.update()
 
     def is_selected(self, *args):

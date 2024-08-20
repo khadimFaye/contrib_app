@@ -23,7 +23,7 @@ class LogsPage(Container):
     def __init__(self, page, callback):
         self._page = page
        
-        self.listview = ListView(spacing=8, controls=[self.excpetion_illustration(message='Nessuna attivita')])
+        self.listview = ListView(spacing=8, controls=[Container(self.excpetion_illustration(message='Nessuna attivita'))])
         self.list_users = GridView(runs_count=1,spacing=8,)
         self.menu_opener = callback
         self.navbar =IconButton(icon = icons.ARROW_BACK, icon_color=colors.BLACK87, on_click=lambda e :self.menu_opener(e))
@@ -35,7 +35,7 @@ class LogsPage(Container):
             # height=500,
             content=Column(
                 
-                scroll=ScrollMode.AUTO,
+            
                  controls=[
                     Container(
                        expand = False,
@@ -55,12 +55,12 @@ class LogsPage(Container):
                                     alignment=MainAxisAlignment.CENTER, 
                                         controls = [
                                             
-                                            Icon(
-                                                name = icons.HISTORY,
-                                                color=colors.BLUE_700,
-                                            ),
+                                            # Icon(
+                                            #     name = icons.HISTORY,
+                                            #     color=colors.BLUE_700,
+                                            # ),
                                             Text(
-                                                value = 'registri'.title(), 
+                                                value = 'le attivtà'.title(), 
                                                 weight='w600', 
                                                 size = 20,
                                                 color=colors.BLACK87),
@@ -75,7 +75,7 @@ class LogsPage(Container):
             Container(),
             
             
-            self.listview
+            Column(padding = 10, expand=True,scroll=ScrollMode.HIDDEN,controls=[self.listview])
             #divider
 
 
@@ -109,9 +109,23 @@ class LogsPage(Container):
           
        
 
-    def check_activity(self, *args):
-        pass
-      
+    def deserialize_and_add_controls(self, control_dict_hash_map):
+       
+       
+        # def deserialize_widget(control_dict):
+        #     # Ricrea il widget Text dal dizionario serializzato
+        #     return Text(**{k: v for k, v in control_dict.items() if v is not None and not k.startswith('_')})
+        
+        # deserialized_controls = [deserialize_widget(control_dict) for control_dict in control_dict_hash_map ]
+        self.listview.controls=control_dict_hash_map
+        self.listview.update()
+        self.update()
+        
+        
+    def thread_(self, arg):
+        import threading
+        threading.Thread(target=self.deserialize_and_add_controls, args=(arg)).start()
+    
         
         
 

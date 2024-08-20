@@ -42,7 +42,7 @@ class admin_log_template(Container):
                 controls = [
                     #autore container
                     Row(
-                        controls = [Column([Container(padding = 5, border_radius=5, bgcolor=colors.GREEN_200, content=Row([Icon(name = icons.PERSON, color='white'), Text(value=admin, color='white'), ])),]),  Container(width=3,height=30,bgcolor='grey'), Text(expand=True, spans=[TextSpan(text = detail), TextSpan(text=user.upper(), style=TextStyle(weight='w800'))], text_align=TextAlign.LEFT, color = colors.BLACK87, weight='w500')]
+                        controls = [Column([Container(padding = 5, border_radius=5, bgcolor=colors.GREEN_200, content=Row([Icon(name = icons.PERSON, color='white'), Text(value=admin, color='white'), ])),]),  Container(width=3,height=30,bgcolor='grey'), Text(expand=True, spans=[TextSpan(text = detail), TextSpan(text=user.upper(), style=TextStyle(weight='w800', color=colors.random_color()))], text_align=TextAlign.LEFT, color = colors.BLACK87, weight='w500')]
                     ),
                     # Divider(),
                     #deatil container

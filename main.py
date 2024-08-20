@@ -23,6 +23,7 @@ from app.pages.main_page import MainApp
 
     
 def main(page : Page):
+    
     page.data = {'control' : None, 'logs' : []}
     def on_message(message):
        page.data['logs'].append(message)
@@ -37,12 +38,11 @@ def main(page : Page):
     page.theme_mode = 'light'
     # page.add(SafeArea(expand=True, content = Login(page)))
     page.on_route_change = lambda _ : change_route(page=page)
-    
+  
 
     page.bgcolor = colors.PURPLE_800 if page.platform.value =='windows'  else 'white'
 
     page.window.width,page.window.height = (650,740)
-    page.add(LogsPage(page, callback=MainApp(page).open_menu))
     
     if page.client_storage.get('sub') is not None:
         print('utent', page.client_storage.get('sub'))

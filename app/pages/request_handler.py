@@ -26,6 +26,7 @@ class RQ(Container):
         self.list_users = GridView(runs_count=1,spacing=8,)
         self.menu_opener = callback
         self.navbar =IconButton(icon = icons.MENU_ROUNDED, icon_color=colors.BLACK87, on_click=lambda e :self.menu_opener(e))
+        self.reload_image = Image(src=f'/hotreload.gif', width=200, height=200)
         self.badge = badge
         super().__init__(
             bgcolor=colors.with_opacity(0.95, 'white'),
@@ -131,21 +132,28 @@ class RQ(Container):
             self.clear()
         else:
             print('children')
-          
+    
+    def loading(self,*args):
+        self.listview.controls = [self.reload_image]
+        self.update()
        
 
     def load_request(self, *args):
-        
         self.clear()
+        self.loading()
+        controls  = []
+        
+        
         try:
             
             data = self.send_translate_request()
             self.counter.value = str(len(data)) if data is not None else str('0')
             if data is not None and data !=[]:
+               
                 
                 for i in data:
                     print(i['id'])
-                    self.listview.controls.append(
+                    controls.append(
                         RequestCard(
                             badge = self.badge,
                             refresh=self.load_request,
@@ -158,8 +166,13 @@ class RQ(Container):
                             question=i["question"],
                             request_id =i['request_id'] ,
                             timestamp=f"{datetime.fromtimestamp(i['timestamp'])}"))
+                
+                self.listview.controls=controls
+                
+                    
+          
 
-                    self.update()
+                    
                     
             else:
                 if self._page.client_storage.get('admin')!='True':

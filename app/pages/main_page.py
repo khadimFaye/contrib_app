@@ -68,10 +68,10 @@ class MainApp(Column):
             if index==0:
                 self.HOME.refresh_logs()
                     
-            elif index ==2:
+            elif index ==1:
                 self.LogPage.flag=True if len(self._page.data['logs'])!=0 else False
-                if self.LogPage:
-                    self.LogPage.listview.controls = self._page.client_storage.get('logs')
+                if self.LogPage.flag:
+                    self.LogPage.thread_([self._page.data.get('logs')])
             self.open_menu()
             
     def change_destination_for_other_platform(self, e):
