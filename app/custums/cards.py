@@ -53,7 +53,7 @@ class contentCard(Card):
             content=Row(
                 [
                     Icon(name = icons.CANCEL if not STATUS else icons.CHECK_CIRCLE, color='red' if not STATUS else 'green', size = 14),
-                    Text(value = 'non tradotto' if not STATUS else 'tradotto', color = colors.RED_700 if not STATUS else colors.GREEN_700, weight='w600', size = 13)]
+                    Text(value = 'non tradotto' if not STATUS else 'tradotto', color = colors.RED_700 if not STATUS else colors.GREEN_700, weight='w600', size = 13, selectable=True)]
             )
         )
         #request status 
