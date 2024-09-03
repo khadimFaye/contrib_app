@@ -288,6 +288,7 @@ class RequestCard(Card):
         self.update()
         
     def approve_request(self, e):
+ 
         try:
             
 
@@ -310,7 +311,7 @@ class RequestCard(Card):
             print('connection error ', str(e))
         except Exception as e:
             print('error ', str(e))
-            self.set_snackbar(message='qualcosa é andato storto :(', color='red')
+            self.set_snackbar(message='qualcosa é andato storto :( {str(e)}', color='red')
        
     def delet_request(self, e):
         try:
