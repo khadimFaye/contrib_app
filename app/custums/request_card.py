@@ -334,7 +334,7 @@ class RequestCard(Card):
                 
         except Exception as e:
             print('error ', str(e))
-            self.set_snackbar(message='qualcosa é andato storto :(', color='red')
+            self.set_snackbar(message=f'qualcosa é andato storto :( {str(e)}', color='red')
         finally:
             if e.control.text=='rifiuta':
                 self.send_log(message='ha rifiutato la richiesta di: ')
